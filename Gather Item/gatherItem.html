@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="gatherItemStylesheet.css" />
+    <title></title>
+</head>
+<body>
+    <div id="main">
+
+    </div>
+    <img id="foundItemImg" />
+    <img id="itemGlow"  src= "../Assets/general/glow.png"/>
+    <div id="confirmationBox" class="customDialogBox">
+        <img id="confirmationBoxImg" src="../Assets/items/placeholder.jpg" />
+        <span id="confirmationBoxTitle">[item name]</span>
+        <span id="itemEffect">[Item Effect]</span>
+        <button id="confirmationBtn">Pick</button>
+        <button id="cancellationBtn">Ignore</button>
+    </div>
+    <div id="completionBox" class="customDialogBox">
+        <span id="completionMessage">[Message]</span>
+        <button id="closeCompletionBoxBtn">Close</button>
+    </div>
+    <button id="backBtn"> Back</button>
+
+    <script src="gatherItemScript.js"></script>
+
+</body>
+</html>
