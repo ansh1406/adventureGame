@@ -8,7 +8,6 @@ body {
     height: 100%;
     display: grid;
     margin: auto;
-    background-repeat: no-repeat;
     background-size: 100% 100%;
     background-image: url("../Assets/general/mainBackground.jpg");
 }
@@ -27,7 +26,7 @@ body {
     justify-content: space-between;
 }
 span {
-    font-size: 22px;
+    font-size: large;
     font-family: 'Comic Sans MS';
     text-shadow:2px 2px 5px white;
 }
@@ -35,13 +34,13 @@ span {
     border:groove black 5px;
     border-radius:10px;
     margin-left : 10%;
-    font-size:20px;
+    font-size:medium;
     background:none;
 }
 
 #mainMenuBtn {
     margin-top: 10%;
-    font-size: 26px;
+    font-size: large;
     font-family: 'Comic Sans MS';
     color: antiquewhite;
     text-shadow: 1px 1px 0px white;

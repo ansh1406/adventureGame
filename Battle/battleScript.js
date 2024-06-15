@@ -8,8 +8,13 @@ let player = {
     atk: parseInt(localStorage.getItem('atk')),
     def: parseInt(localStorage.getItem('def')),
     agi: parseInt(localStorage.getItem('agi')),
+    skillPoints:parseInt(localStorage.getItem('skillPoints')),
     deathCount: parseInt(localStorage.getItem('deathCount'))
 }
+
+const baseSkillPoints = 15;
+const skillPointsPerLevel = 5;
+const attrBaseValue = 2;
 
 let monsters = [
     { name: "Slime", level: 1, hp: 20, atk: 5, def: 1, agi: 2, exp: 20 },
@@ -139,7 +144,243 @@ switch (areaCode) {
 backgroundImage = backgroundImage + '.jpg")';
 document.body.style.backgroundImage = backgroundImage;
 
+let attackCards = document.getElementById('attackCards');
+let playerImage = document.getElementById('playerImage');
+let monsterImage = document.getElementById('monsterImage');
+let playerHealth = document.getElementById('playerHealth');
+let monsterHealth = document.getElementById('monsterHealth');
+let accuracyCircle = document.getElementById('accuracyCircle');
+let accuracyCircleSvg = document.getElementById('accuracyCircleSvg');
+let selectedAttackImg = document.getElementById('selectedAttackImg');
+
+let battleCompletionBox = document.getElementById('battleCompletionBox');
+let completionMessage = document.getElementById('completionMessage');
+let afterBattlePlayerLevel = document.getElementById('afterBattlePlayerLevel');
+let afterBattlePlayerHp = document.getElementById('afterBattlePlayerHp');
+let afterBattlePlayerExp = document.getElementById('afterBattlePlayerExp');
+let backToMap = document.getElementById('backToMap');
+let backToMainMenu = document.getElementById('backToMainMenu');
+
+battleCompletionBox.style.display = 'none';
+backToMap.addEventListener('click', () => {
+    location.href = '../Map/map.html';
+});
+backToMainMenu.addEventListener('click', () => {
+    location.href = '../Main Menu/mainMenu.html';
+});
+
+let animateAccuracyCircleEvent;
+let playerAccuracy = 10, isAccuracyIncreasing = true;
+
 let monster = spawnMonster();
+let monsterMaxHp = monster.hp;
+playerImage.src = "../Assets/general/player.png"
+monsterImage.src = '../Assets/monsters/' + monster.name + '.png';
+
+let selectedAttack;
+
+accuracyCircleSvg.addEventListener('click', () => {
+    accuracyCircle.style.display = 'none';
+    selectedAttackImg.style.display = 'none';
+    let damage = (player.atk * selectedAttack.power) / 100;
+    let def_diff = monster.def - player.def;
+    let def_factor;
+    switch (parseInt((monster.level - 1) / 5)) {
+        case 0:
+            damage *= 2;
+            break;
+
+        case 1:
+            damage *= 4;
+            break;
+
+        case 2:
+            damage *= 8;
+            break;
+
+        case 3:
+            damage *= 16;
+            break;
+
+        case 4:
+            damage *= 32;
+            break;
+
+        default:
+            damage *= 64;
+            break;
+    }
+    if (def_diff < 20 && def_diff > 0) {
+        def_factor = (100 - (def_diff * 3));
+    }
+    if (def_diff <= 0) {
+        def_factor = 100;
+    }
+    if (def_diff >= 20) {
+        def_factor = 40;
+    }
+    damage = damage * def_factor / 100;
+    damage = (damage * playerAccuracy) / 100;
+    if (damage < 0)
+        damage = 0;
+
+    damage = parseInt(damage);
+
+    if (monster.hp > damage) {
+        monster.hp -= damage;
+        setTimeout(monsterTurn, 1000);
+    }
+    else {
+        monster.hp = 0;
+        monsterLost();
+    }
+    updateHealthBars(); 
+});
+
+for (let i in attacks) {
+    let attackCard = document.createElement('img');
+    attackCard.classList.add('attackCard');
+    attackCard.src = '../Assets/attacks/' + attacks[i].name + '.jpg';
+    attackCards.appendChild(attackCard);
+    attackCard.addEventListener('click', () => {
+        attackCards.style.display = 'none';
+        selectedAttackImg.src = attackCard.src;
+        selectedAttackImg.style.display = 'block';
+        accuracyCircle.style.display = 'block';
+        selectedAttack = attacks[i];
+        clearInterval(animateAccuracyCircleEvent);
+        animateAccuracyCircleEvent = setInterval(animateAccuracyCirle, calculateAnimationDelay());
+    });
+}
+function playerTurn() {
+    attackCards.style.display = 'flex';
+    playerAccuracy = 10;
+}
+
+function monsterTurn() {
+    let random = parseInt((Math.random() * 100)) % attacks.length;
+    selectedAttack = attacks[random];
+    let damage = (monster.atk * selectedAttack.power) / 100;
+    let def_diff = player.def - monster.def;
+    let def_factor;
+    let monsterAccuracy = selectedAttack.accuracy + monster.agi - player.agi + parseInt(Math.random() * 40 - 10);
+    switch (parseInt((monster.level - 1) / 5)) {
+        case 0:
+            damage *= 2;
+            break;
+
+        case 1:
+            damage *= 4;
+            break;
+
+        case 2:
+            damage *= 8;
+            break;
+
+        case 3:
+            damage *= 16;
+            break;
+
+        case 4:
+            damage *= 32;
+            break;
+
+        default:
+            damage *= 64;
+            break;
+    }
+    if (def_diff < 20 && def_diff > 0) {
+        def_factor = (100 - (def_diff * 3));
+    }
+    if (def_diff <= 0) {
+        def_factor = 100;
+    }
+    if (def_diff >= 20) {
+        def_factor = 40;
+    }
+    damage = damage * def_factor / 100;
+    damage = (damage * monsterAccuracy) / 100;
+    if (damage < 0)
+        damage = 0;
+
+    damage = parseInt(damage);
+
+    if (player.hp > damage) {
+        player.hp -= damage;
+        setTimeout(playerTurn, 1000);
+    }
+    else {
+        player.hp = 0;
+        playerLost();
+    }
+    updateHealthBars();
+}
+
+function playerLost() {
+    playerImage.style.display = 'none';
+    player.exp = 0;
+    player.level = parseInt(player.level / 5) + 1;
+    player.skillPoints = baseSkillPoints + skillPointsPerLevel * (player.level - 1);
+    player.atk = attrBaseValue;
+    player.def = attrBaseValue;
+    player.agi = attrBaseValue;
+    player.deathCount++;
+    calibratePlayerData();
+    player.hp = player.maxHp;
+    updatePlayerData();
+    completionMessage.innerHTML = monster.name + ' has defeated ' + player.name;
+    afterBattlePlayerLevel.innerHTML = "Level : " + player.level + "( Death penalty recieved. Skill Points have been restored)";
+    afterBattlePlayerHp.innerHTML = "Hp : " + player.hp + '/' + player.maxHp;
+    afterBattlePlayerExp.innerHTML = "Exp : " + player.exp + '/' + player.maxExp;
+    battleCompletionBox.style.display = 'block';
+}
+
+function monsterLost() {
+    monsterImage.style.display = 'none';
+    if (monster.level == player.level) player.exp += monster.exp;
+    if (player.exp >= player.maxExp) {
+        player.level++;
+        player.skillPoints += 5;
+        player.exp = 0;
+        calibratePlayerData();
+        player.hp = player.maxHp;
+        afterBattlePlayerLevel.innerHTML = "Level :" + player.level + "(You have leveled up " + skillPointsPerLevel + " Skill Points gained)";
+    }
+    else {
+        afterBattlePlayerLevel.innerHTML = "Level : " + player.level;
+    }
+    updatePlayerData();
+    completionMessage.innerHTML = player.name + ' has successfully defeated ' + monster.name;
+    afterBattlePlayerHp.innerHTML = "Hp : " + player.hp + '/' + player.maxHp;
+    afterBattlePlayerExp.innerHTML = "Exp : " + player.exp + '/' + player.maxExp;
+    battleCompletionBox.style.display = 'block';
+}
+
+function animateAccuracyCirle() {
+    if (isAccuracyIncreasing)
+        playerAccuracy+=2;
+    else
+        playerAccuracy-=2;
+    let accuracyCircleRadius = 45 - (playerAccuracy - 10) * 40 / 90;
+    accuracyCircle.setAttribute('r', accuracyCircleRadius + '%');
+    if (playerAccuracy >= 100)
+        isAccuracyIncreasing = false;
+    if (playerAccuracy <= 10)
+        isAccuracyIncreasing = true;
+}
+function calculateAnimationDelay() {
+    let delay = parseInt((player.agi - monster.agi  )/2 + selectedAttack.accuracy / 10);
+    if (delay < 5) 
+        delay = 5;
+    if (delay > 20)
+        delay = 20;
+    return delay;
+}
+updateHealthBars();
+function updateHealthBars() {
+    playerHealth.innerHTML = player.name + " : " + player.hp + '/' + player.maxHp;
+    monsterHealth.innerHTML = monster.name + " : " + monster.hp + '/' + monsterMaxHp;
+}
 function spawnMonster() {
     let random = parseInt(Math.random()*25200);
     let selectedMonsters = [];
@@ -188,7 +429,6 @@ function spawnMonster() {
     return selectedMonsters[random];
 }
 function selectMonstersOfLevels(neededLevels) {
-    console.log(neededLevels);
     let selectedMonsters = [];
     for (let i in monsters) {
         for (let lvl in neededLevels) {
@@ -198,3 +438,46 @@ function selectMonstersOfLevels(neededLevels) {
     }
     return selectedMonsters;
 }
+
+function calibratePlayerData()
+{
+    if (player.level <= 5) {
+        player.maxExp = 100 + (player.level - 1) * 50;
+        player.maxHp = 100 + (player.level - 1) * 10;
+    }
+    if (player.level > 5 && player.level <= 10) {
+        player.maxExp = 1000 + (player.level - 6) * 100;
+        player.maxHp = 500 + (player.level - 6) * 25;
+    }
+    if (player.level > 10 && player.level <= 15) {
+        player.maxExp = 7000 + (player.level - 11) * 400;
+        player.maxHp = 2500 + (player.level - 11) * 50;
+    }
+    if (player.level > 15 && player.level <= 20) {
+        player.maxExp = 20000 + (player.level - 16) * 1000;
+        player.maxHp = 4000 + (player.level - 16) * 100;
+    }
+    if (player.level > 20 && player.level <= 25) {
+        player.maxExp = 50000 + (player.level - 21) * 2000;
+        player.maxHp = 6500 + (player.level - 21) * 200;
+    }
+    if (player.level > 25) {
+        player.maxExp = 100000 + (player.level - 26) * 1000;
+        player.maxHp = 10000 + (player.level - 26) * 500;
+    }
+}
+
+function updatePlayerData() {
+    localStorage.setItem('level',player.level);
+    localStorage.setItem('hp',player.hp);
+    localStorage.setItem('maxHp',player.maxHp);
+    localStorage.setItem('exp',player.exp);
+    localStorage.setItem('maxExp',player.maxExp);
+    localStorage.setItem('atk',player.atk);
+    localStorage.setItem('def',player.def);
+    localStorage.setItem('agi',player.agi);
+    localStorage.setItem('skillPoints',player.skillPoints);
+    localStorage.setItem('deathCount',player.deathCount);
+
+}
+

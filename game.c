@@ -1121,7 +1121,7 @@ int player_attack(Monster monster)
     }
     if(def_diff>=20)
     {
-        def_factor = 60;
+        def_factor = 40;
     }
     damage = damage*def_factor/100;
     damage=(damage*chance_of_success)/100;
@@ -1194,7 +1194,7 @@ int monster_attack(Monster monster)
     }
     if(def_diff >= 20)
     {
-        def_factor = 60;
+        def_factor = 40;
     }
     damage = damage*def_factor/100;
     damage=(damage*chance_of_success)/100;

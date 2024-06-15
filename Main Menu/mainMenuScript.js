@@ -21,5 +21,5 @@ statusBtn.addEventListener('click', () => {
 });
 
 backBtn.addEventListener('click', () => {
-    location.href = '../Start Screen/index.html';
+    location.href = '../Start Screen/startScreen.html';
 });

@@ -1,4 +1,4 @@
-﻿html {
+html {
     height: 100%;
     width: 100%;
 }
@@ -6,9 +6,8 @@
 body {
     width: 100%;
     height: 100%;
-    display: grid;
+    display: flex;
     margin: auto;
-    background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
@@ -18,4 +17,152 @@ body {
     justify-content: center;
     align-items: center;
     margin: auto;
+}
+
+button {
+    font-size: large;
+    font-family: 'Comic Sans MS';
+    color: antiquewhite;
+    text-shadow: 1px 1px 2px black;
+    border-radius: 15px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("../Assets/general/menuButton.jpg");
+}
+
+span{
+    font-family : 'Comic Sans MS';
+    color:antiquewhite;
+    text-shadow:1px 1px 2px black;
+}
+
+.customDialogBox {
+    position: fixed;
+    border: groove 20px green;
+    border-radius: 10%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("../Assets/general/menuButton.jpg");
+}
+
+#playerImage{
+    position:fixed;
+    right:50px;
+    top:25%;
+    height:50%;
+    aspect-ratio:1/1;
+}
+
+#monsterImage {
+    position: fixed;
+    left: 50px;
+    top: 25%;
+    height: 50%;
+    aspect-ratio: 1/1;
+}
+
+#playerHealthDiv{
+    position:fixed;
+    right:50px;
+    top:5%; 
+}
+
+#monsterHealthDiv {
+    position: fixed;
+    left: 50px;
+    top: 5%;
+}
+#playerHealth, #monsterHealth {
+    text-shadow: 1px 1px 2px black;
+}
+
+
+#attackCards{
+    position:fixed;
+    display:flex;
+    flex-direction:row;
+    bottom:0%;
+    right:20%;
+    height:20%;
+    aspect-ratio:3/1;
+    border: solid green 10px;
+    border-radius:10px;
+    z-index:10;
+}
+.attackCard{
+    margin-left:2%;
+    border: inset 5px gray;
+    width:100%;
+    aspect-ratio:3/4;
+}
+
+#accuracyCircleSvg{
+    position:fixed;
+    left:100px;
+    top:30%;
+    width:10%;
+    aspect-ratio:1/1;
+    z-index:20;
+}
+
+#accuracyCircle{
+    display:none;
+}
+
+#selectedAttackImg{
+    position:fixed;
+    top:20%;
+    left:40%;
+    width:200px;
+    aspect-ratio:3/4;
+    display:none;
+    z-index:15;
+    opacity:0.3;
+}
+
+#battleCompletionBox{
+    display:none;
+    top:10%;
+    left:25%;
+    width:50%;
+    aspect-ratio:2/1;
+}
+#completionMessage{
+    position:absolute;
+    top:10%;
+    left:5%;
+    text-align:center;
+    font-size:medium;
+    line-height:1;
+}
+#afterBattlePlayerLevel {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    text-align:start;
+    font-size:medium;
+    line-height:0.8;
+}
+#afterBattlePlayerHp{
+    position:absolute;
+    top:50%;
+    left :5%;
+    font-size:medium;
+}
+#afterBattlePlayerExp {
+    position: absolute;
+    top: 60%;
+    left: 5%;
+    font-size: medium;
+}
+#backToMap {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    font-size: large;
+}
+#backToMainMenu{
+    position:absolute;
+    bottom:5%;
+    right:5%;
 }

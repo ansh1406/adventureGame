@@ -3,12 +3,28 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="battleStylesheet.css" />
     <title></title>
 </head>
 <body>
     <div id="main">
 
+    </div>
+    <svg id="accuracyCircleSvg"><circle id="accuracyCircle" r="45%" cx="50%" cy="50%" fill="none" stroke="red" stroke-width="3"></circle></svg>
+    <img id="playerImage" />
+    <div id="playerHealthDiv"><span id="playerHealth"></span></div>
+    <img id="monsterImage" />
+    <div id="monsterHealthDiv"><span id="monsterHealth"></span></div>
+    <div id="attackCards"></div>
+    <img id="selectedAttackImg" />
+    <div id="battleCompletionBox" class="customDialogBox">
+        <span id="completionMessage">You successfully defeated goblin.</span>
+        <span id="afterBattlePlayerLevel">Level : 1</span>
+        <span id="afterBattlePlayerHp">Hp : 100/100</span>
+        <span id="afterBattlePlayerExp">Exp : 0/100</span>
+        <button id="backToMap">Map</button>
+        <button id="backToMainMenu">Main Menu</button>
     </div>
 
     <script src="battleScript.js"></script>

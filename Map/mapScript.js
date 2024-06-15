@@ -14,22 +14,22 @@ if (level < 6) {
     swampBtn.innerHTML = ' <span>Defeat previous Boss first.</span><img class="lockImg" src="../Assets/general/areaLock.png" />';
 }
 if (level < 11) {
-    swampBtn.disabled = true;
+    riverBtn.disabled = true;
     riverBtn.style.opacity = '0.8';
     riverBtn.innerHTML = '<span>Defeat previous Boss first.</span> <img class="lockImg" src="../Assets/general/areaLock.png" />';
 }
 if (level < 16) {
-    swampBtn.disabled = true;
+    mountainBtn.disabled = true;
     mountainBtn.style.opacity = "0.8";
     mountainBtn.innerHTML = ' <span>Defeat previous Boss first.</span><img class="lockImg" src="../Assets/general/areaLock.png" />';
 }
 if (level < 21) {
-    swampBtn.disabled = true;
+    peakBtn.disabled = true;
     peakBtn.style.opacity = '0.8';
     peakBtn.innerHTML = '<span>Defeat previous Boss first.</span> <img class="lockImg" src="../Assets/general/areaLock.png" />';
 }
 if (level < 26) {
-    swampBtn.disabled = true;
+    freeZoneBtn.disabled = true;
     freeZoneBtn.style.opacity = "0.8";
     freeZone.innerHTML = '<span>Defeat previous Boss first.</span> <img class="lockImg" src="../Assets/general/areaLock.png" />';
 }

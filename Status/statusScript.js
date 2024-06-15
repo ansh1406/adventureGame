@@ -29,6 +29,11 @@ def.innerHTML = localStorage.getItem('def');
 agi.innerHTML = localStorage.getItem('agi');
 skillPoints.innerHTML = localStorage.getItem('skillPoints');
 deathCount.innerHTML = localStorage.getItem('deathCount');
+
+let atkIncreaseTimer;
+let defIncreaseTimer;
+let agiIncreaseTimer;
+let increasingInterval = 200;
 function checkIfSkillPointsAreAvailable() {
     if (availableSkillPoints <= 0) {
         addToAtk.style.opacity = '0.7';
@@ -40,7 +45,62 @@ function checkIfSkillPointsAreAvailable() {
     }
 }
 
-addToAtk.addEventListener('click', () => {
+addToAtk.addEventListener('click', increaseAtkAttribute);
+
+addToDef.addEventListener('click', increaseDefAttribute);
+
+addToAgi.addEventListener('click', increaseAgiAttribute);
+
+addToAtk.addEventListener('mousedown', () => {
+    atkIncreaseTimer = setInterval(increaseAtkAttribute, increasingInterval);
+});
+
+addToAtk.addEventListener('mouseup', () => {
+    clearInterval(atkIncreaseTimer);
+});
+
+addToDef.addEventListener('mousedown', () => {
+    defIncreaseTimer = setInterval(increaseDefAttribute, increasingInterval);
+});
+
+addToDef.addEventListener('mouseup', () => {
+    clearInterval(defIncreaseTimer);
+});
+
+addToAgi.addEventListener('mousedown', () => {
+    agiIncreaseTimer = setInterval(increaseAgiAttribute, increasingInterval);
+});
+
+addToAgi.addEventListener('mouseup', () => {
+    clearInterval(agiIncreaseTimer);
+});
+
+addToAtk.addEventListener('touchstart', () => {
+    atkIncreaseTimer = setInterval(increaseAtkAttribute, increasingInterval);
+});
+
+addToAtk.addEventListener('touchend', () => {
+    clearInterval(atkIncreaseTimer);
+});
+
+addToDef.addEventListener('touchstart', () => {
+    defIncreaseTimer = setInterval(increaseDefAttribute, increasingInterval);
+});
+
+addToDef.addEventListener('touchend', () => {
+    clearInterval(defIncreaseTimer);
+});
+
+addToAgi.addEventListener('touchstart', () => {
+    agiIncreaseTimer = setInterval(increaseAgiAttribute, increasingInterval);
+});
+
+addToAgi.addEventListener('touchend', () => {
+    clearInterval(agiIncreaseTimer);
+});
+
+
+function increaseAtkAttribute() {
     if (availableSkillPoints > 0) {
         let currentAtk = parseInt(localStorage.getItem('atk'));
         currentAtk++;
@@ -50,9 +110,9 @@ addToAtk.addEventListener('click', () => {
         atk.innerHTML = currentAtk;
         skillPoints.innerHTML = availableSkillPoints;
     }
-});
+}
 
-addToDef.addEventListener('click', () => {
+function increaseDefAttribute() {
     if (availableSkillPoints > 0) {
         let currentDef = parseInt(localStorage.getItem('def'));
         currentDef++;
@@ -62,9 +122,9 @@ addToDef.addEventListener('click', () => {
         def.innerHTML = currentDef;
         skillPoints.innerHTML = availableSkillPoints;
     }
-});
+}
 
-addToAgi.addEventListener('click', () => {
+function increaseAgiAttribute() {
     if (availableSkillPoints > 0) {
         let currentAgi = parseInt(localStorage.getItem('agi'));
         currentAgi++;
@@ -74,7 +134,7 @@ addToAgi.addEventListener('click', () => {
         agi.innerHTML = currentAgi;
         skillPoints.innerHTML = availableSkillPoints;
     }
-});
+}
 
 mainMenuBtn.addEventListener('click', () => {
     location.href = '../Main Menu/mainMenu.html';

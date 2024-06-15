@@ -8,7 +8,6 @@ body {
     height: 100%;
     display: grid;
     margin: auto;
-    background-repeat: no-repeat;
     background-size: 100% 100%;
     background-image: url("../Assets/general/mainBackground.jpg");
 }
@@ -22,7 +21,7 @@ body {
     margin: auto;
 }
 button {
-    font-size: 26px;
+    font-size: large;
     font-family: 'Comic Sans MS';
     color: antiquewhite;
     text-shadow: 1px 1px 0px white;
@@ -41,7 +40,7 @@ span {
 
 #name {
     width:50%;
-    font-size: 20px;
+    font-size: large;
     font-family: 'Comic Sans MS';
     border-radius: 15px;
     color: white;
@@ -64,10 +63,10 @@ span {
 }
 
 #completionBox {
-    bottom: 55%;
+    top:10%;
     left: 25%;
     width: 50%;
-    height: 15%;
+    aspect-ratio:3/1;
     z-index: 20;
 }
 
@@ -75,7 +74,7 @@ span {
     position: absolute;
     top: 5%;
     left: 5%;
-    font-size: 20px;
+    font-size: large;
     word-wrap: break-word;
 }
 

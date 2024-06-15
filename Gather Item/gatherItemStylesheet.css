@@ -10,6 +10,7 @@ body {
     margin: auto;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    overflow:scroll;
 }
 
 #main {
@@ -20,7 +21,7 @@ body {
     margin: auto;
 }
 button {
-    font-size: 26px;
+    font-size: large;
     font-family: 'Comic Sans MS';
     color: antiquewhite;
     text-shadow: 1px 1px 0px white;
@@ -49,7 +50,7 @@ span {
     top:45%;
     left:45%;
     width:10%;
-    height:10%;
+    aspect-ratio:1/1;
     z-index:5;
 }
 #itemGlow {
@@ -57,7 +58,7 @@ span {
     top: 40%;
     left: 40%;
     width: 20%;
-    height: 20%;
+    aspect-ratio:1/1;
     z-index: 1;
     
 }
@@ -78,10 +79,10 @@ span {
 }
 
 #confirmationBox {
-    bottom: 50%;
+    top: 10%;
     left: 25%;
     width: 50%;
-    height: 25%;
+    aspect-ratio:3/1;
     z-index: 10;
 }
 
@@ -109,21 +110,21 @@ span {
     position: absolute;
     top: 20%;
     right: 5%;
-    font-size: 20px;
+    font-size:large;
 }
 
 #itemEffect {
     position: absolute;
     top: 40%;
     right: 5%;
-    font-size: 20px;
+    font-size: large;
 }
 
 #completionBox {
-    bottom: 55%;
+    top: 10%;
     left: 25%;
     width: 50%;
-    height: 15%;
+    aspect-ratio:3/1;
     z-index: 20;
 }
 
@@ -131,7 +132,7 @@ span {
     position: absolute;
     top: 5%;
     left: 5%;
-    font-size: 20px;
+    font-size: large;
     word-wrap: break-word;
 }
 
