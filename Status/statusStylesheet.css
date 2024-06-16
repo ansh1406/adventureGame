@@ -39,6 +39,9 @@ span {
 }
 
 #mainMenuBtn {
+    position:fixed;
+    bottom:0%;
+    right:0%;
     margin-top: 10%;
     font-size: large;
     font-family: 'Comic Sans MS';

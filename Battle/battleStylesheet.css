@@ -47,10 +47,9 @@ span{
 
 #playerImage{
     position:fixed;
-    right:50px;
+    right:100px;
     top:25%;
     height:50%;
-    aspect-ratio:1/1;
 }
 
 #monsterImage {
@@ -58,7 +57,6 @@ span{
     left: 50px;
     top: 25%;
     height: 50%;
-    aspect-ratio: 1/1;
 }
 
 #playerHealthDiv{
@@ -118,6 +116,26 @@ span{
     display:none;
     z-index:15;
     opacity:0.3;
+}
+
+#monsterDamageBubble{
+    position:fixed;
+    left:100px;
+    top:25%;
+    display : none;
+    color: red;
+    font-size:large;
+    z-index:25;
+}
+
+#playerDamageBubble {
+    position: fixed;
+    right:100px;
+    top: 25%;
+    display: none;
+    color: red;
+    font-size: large;
+    z-index: 25;
 }
 
 #battleCompletionBox{

@@ -8,7 +8,7 @@ let player = {
     atk: parseInt(localStorage.getItem('atk')),
     def: parseInt(localStorage.getItem('def')),
     agi: parseInt(localStorage.getItem('agi')),
-    skillPoints:parseInt(localStorage.getItem('skillPoints')),
+    skillPoints: parseInt(localStorage.getItem('skillPoints')),
     deathCount: parseInt(localStorage.getItem('deathCount'))
 }
 
@@ -113,7 +113,6 @@ let monsters = [
 ]
 
 let attacks = [{ name: "Head Bash", power: 100, accuracy: 50 }, { name: "Punch", power: 50, accuracy: 80 }, { name: "Kick", power: 80, accuracy: 60 }];
-
 let areaCode = parseInt(localStorage.getItem('currentArea'));
 let backgroundImage = 'url("../Assets/maps/';
 switch (areaCode) {
@@ -152,6 +151,8 @@ let monsterHealth = document.getElementById('monsterHealth');
 let accuracyCircle = document.getElementById('accuracyCircle');
 let accuracyCircleSvg = document.getElementById('accuracyCircleSvg');
 let selectedAttackImg = document.getElementById('selectedAttackImg');
+let playerDamageBubble = document.getElementById('playerDamageBubble');
+let monsterDamageBubble = document.getElementById('monsterDamageBubble');
 
 let battleCompletionBox = document.getElementById('battleCompletionBox');
 let completionMessage = document.getElementById('completionMessage');
@@ -160,6 +161,8 @@ let afterBattlePlayerHp = document.getElementById('afterBattlePlayerHp');
 let afterBattlePlayerExp = document.getElementById('afterBattlePlayerExp');
 let backToMap = document.getElementById('backToMap');
 let backToMainMenu = document.getElementById('backToMainMenu');
+
+console.log(playerImage.attributes);
 
 battleCompletionBox.style.display = 'none';
 backToMap.addEventListener('click', () => {
@@ -177,7 +180,7 @@ let monsterMaxHp = monster.hp;
 playerImage.src = "../Assets/general/player.png"
 monsterImage.src = '../Assets/monsters/' + monster.name + '.png';
 
-let selectedAttack;
+let selectedAttack = 0;
 
 accuracyCircleSvg.addEventListener('click', () => {
     accuracyCircle.style.display = 'none';
@@ -225,16 +228,26 @@ accuracyCircleSvg.addEventListener('click', () => {
         damage = 0;
 
     damage = parseInt(damage);
+    selectedAttack = 0;
+    animatePlayerImage(damage);
+    setTimeout(() => {
+        if (monster.hp > damage) {
+            monster.hp -= damage;
+            setTimeout(monsterTurn, 1000);
+        }
+        else {
+            monster.hp = 0;
+            monsterLost();
+        }
+        updateHealthBars();
+        monsterDamageBubble.style.display = 'none';
+    }, 1000);
 
-    if (monster.hp > damage) {
-        monster.hp -= damage;
-        setTimeout(monsterTurn, 1000);
-    }
-    else {
-        monster.hp = 0;
-        monsterLost();
-    }
-    updateHealthBars(); 
+});
+
+monsterImage.addEventListener('click', () => {
+    if (selectedAttack != 0)
+        accuracyCircleSvg.dispatchEvent(new MouseEvent('click'));
 });
 
 for (let i in attacks) {
@@ -257,7 +270,7 @@ function playerTurn() {
     playerAccuracy = 10;
 }
 
-function monsterTurn() {
+async function monsterTurn() {
     let random = parseInt((Math.random() * 100)) % attacks.length;
     selectedAttack = attacks[random];
     let damage = (monster.atk * selectedAttack.power) / 100;
@@ -304,16 +317,22 @@ function monsterTurn() {
         damage = 0;
 
     damage = parseInt(damage);
+    selectedAttack = 0;
+    animateMonsterImage(damage);
+    setTimeout(() => {
 
-    if (player.hp > damage) {
-        player.hp -= damage;
-        setTimeout(playerTurn, 1000);
-    }
-    else {
-        player.hp = 0;
-        playerLost();
-    }
-    updateHealthBars();
+        if (player.hp > damage) {
+            player.hp -= damage;
+            setTimeout(playerTurn, 1000);
+        }
+        else {
+            player.hp = 0;
+            playerLost();
+        }
+        updateHealthBars();
+        playerDamageBubble.style.display = 'none';
+    }, 1000);
+
 }
 
 function playerLost() {
@@ -358,9 +377,9 @@ function monsterLost() {
 
 function animateAccuracyCirle() {
     if (isAccuracyIncreasing)
-        playerAccuracy+=2;
+        playerAccuracy += 2;
     else
-        playerAccuracy-=2;
+        playerAccuracy -= 2;
     let accuracyCircleRadius = 45 - (playerAccuracy - 10) * 40 / 90;
     accuracyCircle.setAttribute('r', accuracyCircleRadius + '%');
     if (playerAccuracy >= 100)
@@ -369,8 +388,8 @@ function animateAccuracyCirle() {
         isAccuracyIncreasing = true;
 }
 function calculateAnimationDelay() {
-    let delay = parseInt((player.agi - monster.agi  )/2 + selectedAttack.accuracy / 10);
-    if (delay < 5) 
+    let delay = parseInt((player.agi - monster.agi) / 2 + selectedAttack.accuracy / 10);
+    if (delay < 5)
         delay = 5;
     if (delay > 20)
         delay = 20;
@@ -382,7 +401,7 @@ function updateHealthBars() {
     monsterHealth.innerHTML = monster.name + " : " + monster.hp + '/' + monsterMaxHp;
 }
 function spawnMonster() {
-    let random = parseInt(Math.random()*25200);
+    let random = parseInt(Math.random() * 25200);
     let selectedMonsters = [];
     switch (areaCode) {
         case 1:
@@ -398,7 +417,7 @@ function spawnMonster() {
                 selectedMonsters = selectMonstersOfLevels([player.level]);
             }
             if (player.level > 10)
-                selectedMonsters = selectMonstersOfLevels([6,7,8,9]);
+                selectedMonsters = selectMonstersOfLevels([6, 7, 8, 9]);
             break;
 
         case 3:
@@ -414,7 +433,7 @@ function spawnMonster() {
                 selectedMonsters = selectMonstersOfLevels([player.level]);
             }
             if (player.level > 20)
-                selectedMonsters = selectMonstersOfLevels([16, 17,18, 19]);
+                selectedMonsters = selectMonstersOfLevels([16, 17, 18, 19]);
             break;
 
         case 5:
@@ -439,8 +458,7 @@ function selectMonstersOfLevels(neededLevels) {
     return selectedMonsters;
 }
 
-function calibratePlayerData()
-{
+function calibratePlayerData() {
     if (player.level <= 5) {
         player.maxExp = 100 + (player.level - 1) * 50;
         player.maxHp = 100 + (player.level - 1) * 10;
@@ -467,17 +485,75 @@ function calibratePlayerData()
     }
 }
 
+console.log(playerImage.style);
+async function animatePlayerImage(damage) {
+    let playerAnimationInterval = setInterval(changePosition, 10);
+    let initialPosition = 100;
+    let velocity = 5;
+    let acceleration = 1;
+    let position = initialPosition;
+    let damagePosition = 25;
+    monsterDamageBubble.style.top = damagePosition + '%';
+    function changePosition() {
+        velocity += acceleration;
+        position += velocity;
+        playerImage.style.right = position + 'px';
+        if (position >= parseInt(window.innerWidth) - 100) {
+            velocity = -5;
+            acceleration = -1;
+            monsterDamageBubble.innerHTML = '-' + damage;
+            monsterDamageBubble.style.display = 'block';
+        }
+        if (acceleration == -1) {
+            damagePosition -= 0.2;
+            monsterDamageBubble.style.top = damagePosition + '%';
+        }
+        if (acceleration == -1 && position <= initialPosition) {
+            clearInterval(playerAnimationInterval);
+            return 0;
+        }
+    }
+}
+
+async function animateMonsterImage(damage) {
+    let monsterAnimationEvent = setInterval(changePosition, 10);
+    let initialPosition = 100;
+    let velocity = 5;
+    let acceleration = 1;
+    let position = initialPosition;
+    let damagePosition = 25;
+    playerDamageBubble.style.top = damagePosition + '%';
+    function changePosition() {
+        velocity += acceleration;
+        position += velocity;
+        monsterImage.style.left = position + 'px';
+        if (position >= parseInt(window.innerWidth) - 100) {
+            velocity = -5;
+            acceleration = -1;
+            playerDamageBubble.innerHTML = '-' + damage;
+            playerDamageBubble.style.display = 'block';
+        }
+        if (acceleration == -1) {
+            damagePosition -= 0.2;
+            playerDamageBubble.style.top = damagePosition + '%';
+        }
+        if (acceleration == -1 && position <= initialPosition) {
+            clearInterval(monsterAnimationEvent);
+            return 0;
+        }
+    }
+}
 function updatePlayerData() {
-    localStorage.setItem('level',player.level);
-    localStorage.setItem('hp',player.hp);
-    localStorage.setItem('maxHp',player.maxHp);
-    localStorage.setItem('exp',player.exp);
-    localStorage.setItem('maxExp',player.maxExp);
-    localStorage.setItem('atk',player.atk);
-    localStorage.setItem('def',player.def);
-    localStorage.setItem('agi',player.agi);
-    localStorage.setItem('skillPoints',player.skillPoints);
-    localStorage.setItem('deathCount',player.deathCount);
+    localStorage.setItem('level', player.level);
+    localStorage.setItem('hp', player.hp);
+    localStorage.setItem('maxHp', player.maxHp);
+    localStorage.setItem('exp', player.exp);
+    localStorage.setItem('maxExp', player.maxExp);
+    localStorage.setItem('atk', player.atk);
+    localStorage.setItem('def', player.def);
+    localStorage.setItem('agi', player.agi);
+    localStorage.setItem('skillPoints', player.skillPoints);
+    localStorage.setItem('deathCount', player.deathCount);
 
 }
 
