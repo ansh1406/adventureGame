@@ -1407,16 +1407,16 @@ void initialize_monsters_area2()
 void initialize_monsters_area3()
 {
     Monster temp1 = {"Iron Tooth Piranha",11,500,28,8,18,1000};
-    Monster temp2 = {"Murlock",11,1000,20,20,20,2000};
+    Monster temp2 = {"Murloc",11,1000,20,20,20,2000};
     Monster temp3 = {"Obsidian Tortoise",11,1500,18,33,13,3000};
     Monster temp4 = {"Iron Tooth Piranha",12,520,30,9,20,1040};
-    Monster temp5 = {"Murlock",12,1030,22,22,21,2060};
+    Monster temp5 = {"Murloc",12,1030,22,22,21,2060};
     Monster temp6 = {"Obsidian Tortoise",12,1550,19,36,14,3100};
     Monster temp7 = {"Iron Tooth Piranha",13,540,32,10,22,1080};
-    Monster temp8 = {"Murlock",13,1060,24,24,22,2120};
+    Monster temp8 = {"Murloc",13,1060,24,24,22,2120};
     Monster temp9 = {"Obsidian Tortoise",13,1600,20,39,15,3200};
     Monster temp10 = {"Iron Tooth Piranha",14,560,34,11,24,1120};
-    Monster temp11 = {"Murlock",14,1090,26,26,23,2180};
+    Monster temp11 = {"Murloc",14,1090,26,26,23,2180};
     Monster temp12 = {"Obsidian Tortoise",14,1650,21,42,16,3300};
     Monster temp13 = {"Hydra",15,2500,28,28,28,8800};
 

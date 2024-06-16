@@ -56,19 +56,19 @@ let monsters = [
 
 
     { name: "Iron Tooth Piranha", level: 11, hp: 500, atk: 28, def: 8, agi: 18, exp: 1000 },
-    { name: "Murlock", level: 11, hp: 1000, atk: 20, def: 20, agi: 20, exp: 2000 },
+    { name: "Murloc", level: 11, hp: 1000, atk: 20, def: 20, agi: 20, exp: 2000 },
     { name: "Obsidian Tortoise", level: 11, hp: 1500, atk: 18, def: 33, agi: 13, exp: 3000 },
 
     { name: "Iron Tooth Piranha", level: 12, hp: 520, atk: 30, def: 9, agi: 20, exp: 1040 },
-    { name: "Murlock", level: 12, hp: 1030, atk: 22, def: 22, agi: 21, exp: 2060 },
+    { name: "Murloc", level: 12, hp: 1030, atk: 22, def: 22, agi: 21, exp: 2060 },
     { name: "Obsidian Tortoise", level: 12, hp: 1550, atk: 19, def: 36, agi: 14, exp: 3100 },
 
     { name: "Iron Tooth Piranha", level: 13, hp: 540, atk: 32, def: 10, agi: 22, exp: 1080 },
-    { name: "Murlock", level: 13, hp: 1060, atk: 24, def: 24, agi: 22, exp: 2120 },
+    { name: "Murloc", level: 13, hp: 1060, atk: 24, def: 24, agi: 22, exp: 2120 },
     { name: "Obsidian Tortoise", level: 13, hp: 1600, atk: 20, def: 39, agi: 15, exp: 3200 },
 
     { name: "Iron Tooth Piranha", level: 14, hp: 560, atk: 34, def: 11, agi: 24, exp: 1120 },
-    { name: "Murlock", level: 14, hp: 1090, atk: 26, def: 26, agi: 23, exp: 2180 },
+    { name: "Murloc", level: 14, hp: 1090, atk: 26, def: 26, agi: 23, exp: 2180 },
     { name: "Obsidian Tortoise", level: 14, hp: 1650, atk: 21, def: 42, agi: 16, exp: 3300 },
 
     { name: "Hydra", level: 15, hp: 2500, atk: 28, def: 28, agi: 28, exp: 8800 },
