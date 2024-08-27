@@ -338,7 +338,10 @@ async function monsterTurn() {
 function playerLost() {
     playerImage.style.display = 'none';
     player.exp = 0;
-    player.level = parseInt(player.level / 5) + 1;
+    if (player.lvl > 25)
+        player.level = parseInt(player.level / 5) + 1;
+    else
+        player.lvl -= 1;
     player.skillPoints = baseSkillPoints + skillPointsPerLevel * (player.level - 1);
     player.atk = attrBaseValue;
     player.def = attrBaseValue;
@@ -357,6 +360,7 @@ function playerLost() {
 function monsterLost() {
     monsterImage.style.display = 'none';
     if (monster.level == player.level) player.exp += monster.exp;
+    if (player.level > 26 && areaCode == 6) player.exp += monster.exp;
     if (player.exp >= player.maxExp) {
         player.level++;
         player.skillPoints += 5;
@@ -368,6 +372,14 @@ function monsterLost() {
     else {
         afterBattlePlayerLevel.innerHTML = "Level : " + player.level;
     }
+    updatePlayerData();
+    completionMessage.innerHTML = player.name + ' has successfully defeated ' + monster.name;
+    afterBattlePlayerHp.innerHTML = "Hp : " + player.hp + '/' + player.maxHp;
+    afterBattlePlayerExp.innerHTML = "Exp : " + player.exp + '/' + player.maxExp;
+    battleCompletionBox.style.display = 'block';
+}
+
+
     updatePlayerData();
     completionMessage.innerHTML = player.name + ' has successfully defeated ' + monster.name;
     afterBattlePlayerHp.innerHTML = "Hp : " + player.hp + '/' + player.maxHp;
