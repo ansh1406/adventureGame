@@ -379,14 +379,6 @@ function monsterLost() {
     battleCompletionBox.style.display = 'block';
 }
 
-
-    updatePlayerData();
-    completionMessage.innerHTML = player.name + ' has successfully defeated ' + monster.name;
-    afterBattlePlayerHp.innerHTML = "Hp : " + player.hp + '/' + player.maxHp;
-    afterBattlePlayerExp.innerHTML = "Exp : " + player.exp + '/' + player.maxExp;
-    battleCompletionBox.style.display = 'block';
-}
-
 function animateAccuracyCirle() {
     if (isAccuracyIncreasing)
         playerAccuracy += 2;
